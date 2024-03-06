@@ -30,10 +30,7 @@ class CourseItemDetails extends Component {
     const {params} = match
     const {id} = params
     const url = `https://apis.ccbp.in/te/courses/${id}`
-    const options = {
-      method: 'Get',
-    }
-    const res = await fetch(url, options)
+    const res = await fetch(url)
     if (res.ok === true) {
       const dat = await res.json()
       const updateCourse = {
@@ -44,7 +41,7 @@ class CourseItemDetails extends Component {
       }
       this.setState({course: updateCourse, api: apiStatus.success})
     } else {
-      this.setState({api: apiStatus.fail})
+      this.setState({api: apiStatus.failure})
     }
   }
 
@@ -57,28 +54,27 @@ class CourseItemDetails extends Component {
   failureView = () => (
     <div>
       <Link to="/" className="link-element">
-        <div className="header">
+        <nav className="header">
           <img
             src="https://assets.ccbp.in/frontend/react-js/tech-era/website-logo-img.png"
             alt="website-logo"
             className="logo"
           />
-        </div>
+        </nav>
       </Link>
-      <div className="failure-container">
-        <img
-          src="https://assets.ccbp.in/frontend/react-js/tech-era/failure-img.png"
-          alt="failure view"
-          className="failure-image"
-        />
-        <h1 className="fail-heading">Oops! Something Went Wrong</h1>
-        <p className="fail-para">
-          We cannot seem to find the page you are looking for
-        </p>
-        <button type="button" className="fail-button">
-          Retry
-        </button>
-      </div>
+
+      <img
+        src="https://assets.ccbp.in/frontend/react-js/tech-era/failure-img.png"
+        alt="failure view"
+        className="failure-image"
+      />
+      <h1 className="fail-heading">Oops! Something Went Wrong</h1>
+      <p className="fail-para">
+        We cannot seem to find the page you are looking for
+      </p>
+      <button type="button" className="fail-button" onClick={this.getItem}>
+        Retry
+      </button>
     </div>
   )
 

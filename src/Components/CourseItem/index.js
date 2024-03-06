@@ -27,11 +27,9 @@ class CourseItem extends Component {
 
   getData = async () => {
     this.setState({api: apiStatus.loading})
-    const url = ' https://apis.ccbp.in/te/courses'
-    const options = {
-      method: 'GET',
-    }
-    const response = await fetch(url, options)
+    const url = `https://apis.ccbp.in/te/courses`
+
+    const response = await fetch(url)
     if (response.ok === true) {
       const data = await response.json()
       const formatData = data.courses.map(each => ({
@@ -41,7 +39,7 @@ class CourseItem extends Component {
       }))
       this.setState({coursesList: formatData, api: apiStatus.success})
     } else {
-      this.setState({api: apiStatus.fail})
+      this.setState({api: apiStatus.failure})
     }
   }
 
@@ -57,11 +55,11 @@ class CourseItem extends Component {
     return (
       <div className="success-container">
         <h1 className="courses">Courses</h1>
-        <div className="courses-container">
+        <ul className="courses-container">
           {coursesList.map(each => (
             <Item key={each.id} details={each} />
           ))}
-        </div>
+        </ul>
       </div>
     )
   }
@@ -69,13 +67,13 @@ class CourseItem extends Component {
   failureView = () => (
     <div>
       <Link to="/" className="link-element">
-        <div className="header">
+        <nav className="header">
           <img
             src="https://assets.ccbp.in/frontend/react-js/tech-era/website-logo-img.png"
             alt="website-logo"
             className="logo"
           />
-        </div>
+        </nav>
       </Link>
       <div className="failure-container">
         <img
@@ -87,7 +85,7 @@ class CourseItem extends Component {
         <p className="fail-para">
           We cannot seem to find the page you are looking for
         </p>
-        <button type="button" className="fail-button">
+        <button type="button" className="fail-button" onClick={this.getData}>
           Retry
         </button>
       </div>
@@ -114,13 +112,13 @@ class CourseItem extends Component {
     return (
       <div>
         <Link to="/" className="link-element">
-          <div className="header">
+          <nav className="header">
             <img
               src="https://assets.ccbp.in/frontend/react-js/tech-era/website-logo-img.png"
               alt="website logo"
               className="logo"
             />
-          </div>
+          </nav>
         </Link>
         {this.renderFinalView()}
       </div>
